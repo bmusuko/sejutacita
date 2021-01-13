@@ -8,19 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getAll = exports.getByUsername = void 0;
-const joi_1 = __importDefault(require("joi"));
 const responseGenerator_1 = require("../../utils/responseGenerator");
 const user_1 = require("../../models/user");
-const getByUsernameValidation = joi_1.default.object().keys({
-    username: joi_1.default.string().required(),
-});
+const validation_1 = require("../../utils/validation");
 const getByUsername = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { error } = getByUsernameValidation.validate(req.params);
+    const { error } = validation_1.usernameParamValidation.validate(req.params);
     if (error) {
         return responseGenerator_1.badRequest(res, error.message);
     }

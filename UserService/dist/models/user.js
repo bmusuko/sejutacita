@@ -31,10 +31,15 @@ const UserSchema = new mongoose_1.Schema({
         unique: true,
         required: true
     },
+    role: {
+        type: String,
+        enum: ["admin", "user"],
+        required: true
+    },
     password: {
         type: String,
         required: true
-    }
+    },
 });
 UserSchema.set('toJSON', {
     transform: function (_, ret) {
@@ -42,6 +47,7 @@ UserSchema.set('toJSON', {
             id: ret._id,
             name: ret.name,
             username: ret.username,
+            role: ret.role
         };
         return retJson;
     }

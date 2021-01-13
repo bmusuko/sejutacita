@@ -1,20 +1,10 @@
 import { Request, Response } from "express";
-import Joi from "joi";
 import { badRequest, successResponse, internalError } from '../../utils/responseGenerator';
 import { User } from '../../models/user';
-
-const updateParamValidation = Joi.object().keys({
-    username: Joi.string().required(),
-});
-
-
-const updateBodyValidation = Joi.object().keys({
-    username: Joi.string(),
-    name: Joi.string(),
-});
+import { updateBodyValidation, usernameParamValidation } from "../../utils/validation";
 
 const updateByUsername = async (req: Request, res: Response) => {
-    let { error } = updateParamValidation.validate(req.params);
+    let { error } = usernameParamValidation.validate(req.params);
     if (error) {
         return badRequest(res, error.message);
     }

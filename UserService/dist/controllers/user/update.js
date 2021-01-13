@@ -8,27 +8,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateByUsername = void 0;
-const joi_1 = __importDefault(require("joi"));
 const responseGenerator_1 = require("../../utils/responseGenerator");
 const user_1 = require("../../models/user");
-const updateParamValidation = joi_1.default.object().keys({
-    username: joi_1.default.string().required(),
-});
-const updateBodyValidation = joi_1.default.object().keys({
-    username: joi_1.default.string(),
-    name: joi_1.default.string(),
-});
+const validation_1 = require("../../utils/validation");
 const updateByUsername = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    let { error } = updateParamValidation.validate(req.params);
+    let { error } = validation_1.usernameParamValidation.validate(req.params);
     if (error) {
         return responseGenerator_1.badRequest(res, error.message);
     }
-    ({ error } = updateBodyValidation.validate(req.body));
+    ({ error } = validation_1.updateBodyValidation.validate(req.body));
     if (error) {
         return responseGenerator_1.badRequest(res, error.message);
     }

@@ -1,15 +1,10 @@
 import { Request, Response } from "express";
-import Joi from "joi";
 import { badRequest, successResponse } from '../../utils/responseGenerator';
 import { User } from '../../models/user';
-
-
-const getByUsernameValidation = Joi.object().keys({
-    username: Joi.string().required(),
-});
+import { usernameParamValidation } from "../../utils/validation";
 
 const getByUsername = async (req: Request, res: Response) => {
-    const { error } = getByUsernameValidation.validate(req.params);
+    const { error } = usernameParamValidation.validate(req.params);
     if (error) {
         return badRequest(res, error.message);
     }

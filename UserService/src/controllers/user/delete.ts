@@ -1,15 +1,11 @@
 import { Request, Response } from "express";
-import Joi from "joi";
 import { badRequest, successResponse } from '../../utils/responseGenerator';
 import { User } from '../../models/user';
+import { usernameParamValidation } from "../../utils/validation";
 
-
-const deleteValidation = Joi.object().keys({
-    username: Joi.string().required(),
-});
 
 const deleteByUsername = async (req: Request, res: Response) => {
-    const { error } = deleteValidation.validate(req.params);
+    const { error } = usernameParamValidation.validate(req.params);
     if (error) {
         return badRequest(res, error.message);
     }

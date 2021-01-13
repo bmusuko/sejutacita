@@ -4,7 +4,7 @@
   "description": "User Service",
   "main": "dist/index.js",
   "scripts": {
-    "start": "node dist/index.js",
+    "start": "tnode dist/index.js",
     "dev": "tsnd --respawn src/index.ts",
     "build": "tsc -p tsconfig.json"
   },

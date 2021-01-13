@@ -4,6 +4,7 @@ interface IUser extends Document {
     name: string;
     username: string;
     password: string;
+    role: string;
 }
 
 const UserSchema = new Schema({
@@ -16,10 +17,15 @@ const UserSchema = new Schema({
         unique: true,
         required: true
     },
+    role: {
+        type: String,
+        enum: ["admin", "user"],
+        required: true
+    },
     password: {
         type: String,
         required: true
-    }
+    },
 })
 
 UserSchema.set('toJSON', {
@@ -28,6 +34,7 @@ UserSchema.set('toJSON', {
             id: ret._id,
             name: ret.name,
             username: ret.username,
+            role: ret.role
         };
         return retJson;
     }

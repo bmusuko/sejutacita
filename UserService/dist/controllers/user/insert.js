@@ -13,24 +13,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.insert = void 0;
-const joi_1 = __importDefault(require("joi"));
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const responseGenerator_1 = require("../../utils/responseGenerator");
 const user_1 = require("../../models/user");
-const insertUserValidation = joi_1.default.object().keys({
-    name: joi_1.default.string().required(),
-    username: joi_1.default.string().required(),
-    password: joi_1.default.string().required(),
-});
+const validation_1 = require("../../utils/validation");
 const insert = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { error } = insertUserValidation.validate(req.body);
+    const { error } = validation_1.insertBodyValidation.validate(req.body);
     if (error) {
         return responseGenerator_1.badRequest(res, error.message);
     }
-    const { name, username, password } = req.body;
+    const { name, username, role, password } = req.body;
     const salt = yield bcryptjs_1.default.genSalt(10);
     const hashedPassword = yield bcryptjs_1.default.hash(password, salt);
-    const model = new user_1.User({ name, username, password: hashedPassword });
+    const model = new user_1.User({ name, username, role, password: hashedPassword });
     try {
         yield model.save();
     }
@@ -38,7 +33,7 @@ const insert = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         if (error.name == "MongoError" && error.code == 11000) {
             return responseGenerator_1.badRequest(res, "Username already exist");
         }
-        return responseGenerator_1.internalError(res);
+        return responseGenerator_1.internalError(res, error.message);
     }
     return responseGenerator_1.successResponse(res, "Success insert user", model);
 });
