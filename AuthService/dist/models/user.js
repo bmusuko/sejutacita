@@ -31,14 +31,15 @@ const UserSchema = new mongoose_1.Schema({
         unique: true,
         required: true
     },
+    role: {
+        type: String,
+        enum: ["admin", "user"],
+        required: true
+    },
     password: {
         type: String,
         required: true
     },
-    role: {
-        type: String,
-        required: true
-    }
 });
 UserSchema.set('toJSON', {
     transform: function (_, ret) {

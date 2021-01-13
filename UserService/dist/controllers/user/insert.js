@@ -18,7 +18,7 @@ const responseGenerator_1 = require("../../utils/responseGenerator");
 const user_1 = require("../../models/user");
 const validation_1 = require("../../utils/validation");
 const insert = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { error } = validation_1.insertBodyValidation.validate(req.body);
+    const { error } = validation_1.bodyValidation.validate(req.body);
     if (error) {
         return responseGenerator_1.badRequest(res, error.message);
     }

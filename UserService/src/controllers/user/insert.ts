@@ -2,10 +2,10 @@ import { Request, Response } from "express"
 import bcrypt from "bcryptjs";
 import { badRequest, successResponse, internalError } from '../../utils/responseGenerator'
 import { User } from '../../models/user';
-import { insertBodyValidation } from "../../utils/validation";
+import { bodyValidation } from "../../utils/validation";
 
 const insert = async (req: Request, res: Response) => {
-    const { error } = insertBodyValidation.validate(req.body)
+    const { error } = bodyValidation.validate(req.body)
     if (error) {
         return badRequest(res, error.message);
     }

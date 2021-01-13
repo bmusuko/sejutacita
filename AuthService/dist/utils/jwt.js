@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.authError = exports.jwtAccessTokenMiddleware = exports.signRefreshToken = exports.signAccessToken = void 0;
+exports.authError = exports.jwtRefreshTokenMiddleware = exports.jwtAccessTokenMiddleware = exports.signRefreshToken = exports.signAccessToken = void 0;
 const dotenv_1 = __importDefault(require("dotenv"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const express_jwt_1 = __importDefault(require("express-jwt"));
@@ -35,6 +35,12 @@ const jwtAccessTokenMiddleware = express_jwt_1.default({
     algorithms: ['HS256']
 });
 exports.jwtAccessTokenMiddleware = jwtAccessTokenMiddleware;
+const jwtRefreshTokenMiddleware = express_jwt_1.default({
+    secret: REFRESH_TOKEN_SECRET,
+    getToken: getJwtToken,
+    algorithms: ['HS256']
+});
+exports.jwtRefreshTokenMiddleware = jwtRefreshTokenMiddleware;
 const authError = (err, _, res, next) => {
     if (err.name === 'UnauthorizedError') {
         return responseGenerator_1.authErrorResponse(res, err.message);

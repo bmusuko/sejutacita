@@ -12,23 +12,30 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.isAuthenticated = void 0;
+const axios_1 = __importDefault(require("axios"));
 const dotenv_1 = __importDefault(require("dotenv"));
-const mongoose_1 = __importDefault(require("mongoose"));
-const app_1 = __importDefault(require("./app"));
-const main = () => __awaiter(void 0, void 0, void 0, function* () {
-    dotenv_1.default.config();
-    const PORT = process.env.PORT || 8081;
-    const MONGODB_URL = process.env.MONGODB_URL;
+const responseGenerator_1 = require("../utils/responseGenerator");
+dotenv_1.default.config();
+const AUTH_VERIFY_URL = process.env.AUTH_SERVICE_URL + "/auth/verify";
+console.log(AUTH_VERIFY_URL);
+const isAuthenticated = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!req.headers.authorization) {
+        return responseGenerator_1.authErrorResponse(res, "Missing jwt token");
+    }
+    let response;
     try {
-        yield mongoose_1.default.connect(MONGODB_URL, { useUnifiedTopology: true, useNewUrlParser: true });
+        response = yield axios_1.default.get(AUTH_VERIFY_URL, {
+            headers: {
+                'Authorization': req.headers.authorization
+            }
+        });
     }
     catch (error) {
-        console.log("Can't connect to mongodb", error);
-        process.exit(1);
+        return responseGenerator_1.responseGenerator(res, error.response.data.status, error.response.data.message, null);
     }
-    app_1.default.listen(PORT, () => {
-        console.log(`Server is running at port: ${PORT}`);
-    });
+    req.user = response.data.data;
+    return next();
 });
-main();
-//# sourceMappingURL=index.js.map
+exports.isAuthenticated = isAuthenticated;
+//# sourceMappingURL=authentication.js.map

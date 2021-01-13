@@ -28,7 +28,6 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (!user) {
         return responseGenerator_1.authErrorResponse(res, "username not found");
     }
-    console.log(user);
     const checkPassword = yield bcryptjs_1.default.compare(password, user.password);
     if (!checkPassword) {
         return responseGenerator_1.authErrorResponse(res, "wrong password");

@@ -7,7 +7,7 @@ const refresh = async (req: Request, res: Response) => {
     const { id } = req.user;
     const user = await User.findById(id);
     if (!user) {
-        return authErrorResponse(res, "user not found")
+        return authErrorResponse(res, "user jwt not found")
     }
 
     const access_token = signAccessToken({

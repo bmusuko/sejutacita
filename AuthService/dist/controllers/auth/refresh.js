@@ -9,17 +9,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.verify = void 0;
+exports.refresh = void 0;
 const user_1 = require("../../models/user");
+const jwt_1 = require("../../utils/jwt");
 const responseGenerator_1 = require("../../utils/responseGenerator");
-const verify = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const refresh = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.user;
     const user = yield user_1.User.findById(id);
     if (!user) {
         return responseGenerator_1.authErrorResponse(res, "user jwt not found");
     }
-    user['password'] = undefined;
-    return responseGenerator_1.successResponse(res, "Valid access token", user);
+    const access_token = jwt_1.signAccessToken({
+        id: user.id
+    });
+    return responseGenerator_1.successResponse(res, "Success get new access token", { access_token });
 });
-exports.verify = verify;
-//# sourceMappingURL=verify.js.map
+exports.refresh = refresh;
+//# sourceMappingURL=refresh.js.map

@@ -11,5 +11,5 @@ const authRoute = express_1.default.Router();
 exports.authRoute = authRoute;
 authRoute.post("/login", auth_1.login);
 authRoute.get("/verify", jwt_1.jwtAccessTokenMiddleware, auth_1.verify);
-authRoute.get("/refresh");
+authRoute.get("/refresh", jwt_1.jwtRefreshTokenMiddleware, auth_1.refresh);
 //# sourceMappingURL=authRoute.js.map

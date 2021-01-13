@@ -6,7 +6,7 @@ const verify = async (req: Request, res: Response) => {
     const { id } = req.user;
     const user = await User.findById(id);
     if (!user) {
-        return authErrorResponse(res, "user not found")
+        return authErrorResponse(res, "user jwt not found")
     }
     user['password'] = undefined;
     return successResponse(res, "Valid access token", user);
