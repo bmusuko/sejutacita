@@ -16,12 +16,12 @@ const getByUsername = async (req: Request, res: Response) => {
         return badRequest(res, "username doest not exist");
     }
 
-    return successResponse(res, "Success get User", user);
+    return successResponse(res, "Success get single user", user);
 }
 
 const getAll = async (_: Request, res: Response) => {
     const users = await User.find()
-    return successResponse(res, "Success get User", users);
+    return successResponse(res, "Success get all user", users);
 }
 
 export { getByUsername, getAll }

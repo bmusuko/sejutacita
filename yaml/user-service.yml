@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-service
+spec:
+  selector:
+    matchLabels:
+      app: node-sample-helloworld
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: node-sample-helloworld
+    spec:
+      containers:
+      - name: main
+        image: bmusuko/user-service:latest
+        imagePullPolicy: Always
+        env:
+          - name: MONGODB_URL
+            value: "mongodb://localhost:27017/sejutacita" # change this to atlas url
+          - name: AUTH_SERVICE_URL
+            value: "http://34.101.151.2"
+          - name: PORT
+            value: "8080"
+        ports:
+        - containerPort: 8080
