@@ -22,7 +22,7 @@ const updateByUsername = (req, res) => __awaiter(void 0, void 0, void 0, functio
     if (error) {
         return responseGenerator_1.badRequest(res, error.message);
     }
-    ({ error } = validation_1.bodyValidation.validate(req.body));
+    ({ error } = validation_1.bodyOptionalValidation.validate(req.body));
     if (error) {
         return responseGenerator_1.badRequest(res, error.message);
     }

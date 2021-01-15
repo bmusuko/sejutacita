@@ -23,12 +23,12 @@ const getByUsername = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     if (user == null) {
         return responseGenerator_1.badRequest(res, "username doest not exist");
     }
-    return responseGenerator_1.successResponse(res, "Success get User", user);
+    return responseGenerator_1.successResponse(res, "Success get single user", user);
 });
 exports.getByUsername = getByUsername;
 const getAll = (_, res) => __awaiter(void 0, void 0, void 0, function* () {
     const users = yield user_1.User.find();
-    return responseGenerator_1.successResponse(res, "Success get User", users);
+    return responseGenerator_1.successResponse(res, "Success get all user", users);
 });
 exports.getAll = getAll;
 //# sourceMappingURL=get.js.map

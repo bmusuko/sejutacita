@@ -12,7 +12,7 @@ const userRoute = express_1.default.Router();
 exports.userRoute = userRoute;
 userRoute.get("/", authentication_1.isAuthenticated, user_1.getAll);
 userRoute.get("/:username", authentication_1.isAuthenticated, user_1.getByUsername);
-userRoute.post("/", user_1.insert);
+userRoute.post("/", authentication_1.isAuthenticated, admin_1.isAdmin, user_1.insert);
 userRoute.put("/:username", authentication_1.isAuthenticated, admin_1.isAdmin, user_1.updateByUsername);
 userRoute.delete("/:username", authentication_1.isAuthenticated, admin_1.isAdmin, user_1.deleteByUsername);
 //# sourceMappingURL=userRoute.js.map
