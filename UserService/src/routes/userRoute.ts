@@ -7,7 +7,7 @@ const userRoute = express.Router();
 
 userRoute.get("/", isAuthenticated, getAll);
 userRoute.get("/:username", isAuthenticated, getByUsername);
-userRoute.post("/", insert);
+userRoute.post("/", isAuthenticated, isAdmin, insert);
 userRoute.put("/:username", isAuthenticated, isAdmin, updateByUsername);
 userRoute.delete("/:username", isAuthenticated, isAdmin, deleteByUsername);
 

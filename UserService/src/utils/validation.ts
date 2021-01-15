@@ -11,4 +11,11 @@ const bodyValidation = Joi.object().keys({
     role: Joi.string().required(),
 });
 
-export { usernameParamValidation, bodyValidation }
+const bodyOptionalValidation = Joi.object().keys({
+    name: Joi.string(),
+    username: Joi.string(),
+    password: Joi.string(),
+    role: Joi.string(),
+});
+
+export { usernameParamValidation, bodyValidation, bodyOptionalValidation }

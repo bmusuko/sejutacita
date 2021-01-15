@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { badRequest, successResponse, internalError } from '../../utils/responseGenerator';
 import { User } from '../../models/user';
-import { bodyValidation, usernameParamValidation } from "../../utils/validation";
+import { bodyOptionalValidation, usernameParamValidation } from "../../utils/validation";
 import bcrypt from "bcryptjs";
 
 const updateByUsername = async (req: Request, res: Response) => {
@@ -10,7 +10,7 @@ const updateByUsername = async (req: Request, res: Response) => {
         return badRequest(res, error.message);
     }
 
-    ({ error } = bodyValidation.validate(req.body));
+    ({ error } = bodyOptionalValidation.validate(req.body));
     if (error) {
         return badRequest(res, error.message);
     }
